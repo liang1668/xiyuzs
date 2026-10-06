@@ -15,8 +15,8 @@
 
 1. 打开仓库 **Releases → Draft a new release**。
 2. 填写版本标签（例如 `v1.0.0`），将 `.apk`、`.exe` 或 `.zip` 安装包拖入附件区域。
-3. 发布 Release。下载页会自动显示最新已发布 Release 的安装包，不需要重新上传网页。
+3. 发布 Release。下载页会分别查找 APK 和 EXE/ZIP 各自最新的已发布版本，不需要重新上传网页；即使 Android 和 Windows 安装包位于不同 Release 也能正常显示。
 
-APK 资产会显示在 Android 区域；EXE 和 ZIP 会显示在 Windows 区域。醒目的“立即下载”按钮会根据访问设备选择 APK、EXE，或在 iPhone/iPad 上打开网页版。若最新 Release 暂时没有 Windows 安装包，页面会显示提示并提供 Releases 入口。
+APK 资产会显示在 Android 区域；EXE 和 ZIP 会显示在 Windows 区域。下载按钮直接链接到 Release 资产文件，不会先打开 Releases 页面。醒目的“立即下载”按钮会根据访问设备选择 APK、EXE，或在 iPhone/iPad 上打开网页版。若对应平台的安装包尚未上传，页面会提示，而不会跳转到 Releases 页面。
 
 请将仓库设为 **Public（公开）**，这样访客无需登录即可下载 Release 资产。iPhone 网页版链接仍为 `http://139.196.4.34:8080/`。请勿将访问令牌或其他密钥放进网页代码。
