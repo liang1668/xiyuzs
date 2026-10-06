@@ -99,17 +99,18 @@
       <section class="hero" aria-labelledby="page-title">
         <div class="eyebrow">DOWNLOAD CENTER</div>
         <h1 id="page-title">下载小雨助手</h1>
-        <p class="hero-copy">选择适合你设备的版本，安装包由小雨助手下载服务器提供。</p>
+        <p class="hero-copy">选择适合你设备的版本，安装包由 GitHub Releases 安全提供。</p>
         <div class="hero-actions">
-          <a class="primary-button" id="download-now" href="http://139.196.4.34:8080/downloads/xyzs.exe">
+          <a class="primary-button" id="download-now" href="https://github.com/liang1668/xiyuzs/releases">
             <span aria-hidden="true">↓</span><span id="download-label">立即下载</span>
           </a>
-          <span class="release-meta">支持 Android 与 Windows</span>
+          <span class="release-meta" id="version-meta">正在获取最新版本…</span>
         </div>
+        <div class="status" id="release-status" role="status" aria-live="polite"></div>
       </section>
 
       <div class="section-heading">
-        <div><h2>选择你的设备</h2><p>点击按钮后将从下载服务器获取安装包</p></div>
+        <div><h2>选择你的设备</h2><p>最新安装包由 GitHub Releases 统一管理</p></div>
         <a class="github-link" href="https://github.com/liang1668/xiyuzs" target="_blank" rel="noopener noreferrer">查看 GitHub 项目 →</a>
       </div>
 
@@ -118,14 +119,14 @@
           <div class="card-icon" aria-hidden="true">📱</div>
           <h3>Android 安卓版</h3>
           <p>下载 APK 安装包，在手机上安装使用。</p>
-          <div class="asset-links"><a class="asset-link" href="http://139.196.4.34:8080/downloads/xiaoyu.apk" download>下载 APK ↓</a></div>
+          <div class="asset-links" id="android-assets"><a class="asset-link" href="https://github.com/liang1668/xiyuzs/releases">查看 GitHub Releases ↗</a></div>
         </article>
 
         <article class="card">
           <div class="card-icon" aria-hidden="true">💻</div>
           <h3>Windows 电脑版</h3>
           <p>下载 EXE 安装程序，在电脑上安装使用。</p>
-          <div class="asset-links"><a class="asset-link" href="http://139.196.4.34:8080/downloads/xyzs.exe" download>下载 EXE ↓</a></div>
+          <div class="asset-links" id="windows-assets"><a class="asset-link" href="https://github.com/liang1668/xiyuzs/releases">查看 GitHub Releases ↗</a></div>
         </article>
 
         <article class="card">
@@ -139,17 +140,52 @@
     </main>
 
     <footer>
-      <span>安装包由下载服务器提供；如遇下载问题，请稍后重试。</span>
+      <span>安装包由 GitHub Releases 提供；如遇下载问题，请稍后重试。</span>
       <a href="https://github.com/liang1668/xiyuzs" target="_blank" rel="noopener noreferrer">GitHub 项目 ↗</a>
     </footer>
   </div>
 
   <script>
-    const androidDownloadUrl = "http://139.196.4.34:8080/downloads/xiaoyu.apk";
-    const windowsDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.exe";
+    const releasesUrl = "https://github.com/liang1668/xiyuzs/releases";
+    const releasesApiUrl = "https://api.github.com/repos/liang1668/xiyuzs/releases?per_page=10";
     const webAppUrl = "http://139.196.4.34:8080/";
 
-    function setDownloadButton() {
+    function createReleaseLink(asset, label) {
+      const link = document.createElement("a");
+      link.className = "asset-link";
+      link.href = asset.browser_download_url;
+      link.textContent = label;
+      link.title = asset.name;
+      link.rel = "noopener noreferrer";
+      return link;
+    }
+
+    function renderAssets(container, assets, extensions) {
+      container.replaceChildren();
+      const matches = assets.filter(asset => {
+        const extension = asset.name.split(".").pop().toLowerCase();
+        return extensions.includes(extension);
+      });
+
+      if (!matches.length) {
+        const link = document.createElement("a");
+        link.className = "asset-link";
+        link.href = releasesUrl;
+        link.textContent = "暂未上传，查看 Releases ↗";
+        link.rel = "noopener noreferrer";
+        container.append(link);
+        return matches;
+      }
+
+      matches.forEach(asset => {
+        const extension = asset.name.split(".").pop().toLowerCase();
+        const label = extension === "apk" ? "下载 APK ↓" : `下载 ${extension.toUpperCase()} ↓`;
+        container.append(createReleaseLink(asset, label));
+      });
+      return matches;
+    }
+
+    function choosePrimaryDownload(androidAssets, windowsAssets) {
       const button = document.getElementById("download-now");
       const label = document.getElementById("download-label");
       const userAgent = navigator.userAgent;
@@ -161,13 +197,53 @@
         button.rel = "noopener noreferrer";
         label.textContent = "打开网页版";
       } else if (/Android/i.test(userAgent)) {
-        button.href = androidDownloadUrl;
+        button.href = androidAssets.length ? androidAssets[0].browser_download_url : releasesUrl;
+        if (!androidAssets.length) label.textContent = "查看下载版本";
       } else {
-        button.href = windowsDownloadUrl;
+        const preferred = windowsAssets.find(asset => asset.name.toLowerCase().endsWith(".exe")) || windowsAssets[0];
+        button.href = preferred ? preferred.browser_download_url : releasesUrl;
+        if (!preferred) label.textContent = "查看下载版本";
       }
     }
 
-    setDownloadButton();
+    async function loadReleases() {
+      const status = document.getElementById("release-status");
+      const versionMeta = document.getElementById("version-meta");
+
+      try {
+        const response = await fetch(releasesApiUrl, {
+          headers: { Accept: "application/vnd.github+json" }
+        });
+        if (!response.ok) throw new Error(`GitHub API 返回 ${response.status}`);
+
+        const releases = await response.json();
+        const release = releases.find(item => !item.draft && item.assets && item.assets.length);
+        if (!release) throw new Error("仓库还没有已发布的安装包");
+
+        const androidAssets = renderAssets(
+          document.getElementById("android-assets"),
+          release.assets,
+          ["apk"]
+        );
+        const windowsAssets = renderAssets(
+          document.getElementById("windows-assets"),
+          release.assets,
+          ["exe", "zip"]
+        );
+        choosePrimaryDownload(androidAssets, windowsAssets);
+        versionMeta.textContent = `版本 ${release.tag_name}`;
+        if (!windowsAssets.length) {
+          status.textContent = "当前 Release 尚无 Windows EXE/ZIP；上传后会自动显示下载按钮。";
+        }
+      } catch (error) {
+        versionMeta.textContent = "可在 GitHub Releases 查看版本";
+        status.textContent = `暂时无法读取安装包列表（${error.message}），请打开 GitHub Releases 查看。`;
+        status.classList.add("error");
+        choosePrimaryDownload([], []);
+      }
+    }
+
+    loadReleases();
   </script>
 </body>
 </html>
