@@ -1,52 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xiyuzs</title>
-    <style>
-        :root {
-            --bg1: #0f172a;
-            --bg2: #1d4ed8;
-            --card: rgba(15, 23, 42, 0.55);
-            --text: #e2e8f0;
-            --muted: #cbd5e1;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, var(--bg1), var(--bg2));
-            color: var(--text);
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,.12);
-            border-radius: 20px;
-            padding: 48px 56px;
-            box-shadow: 0 20px 60px rgba(0,0,0,.25);
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        h1 {
-            margin: 0 0 12px;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            letter-spacing: .04em;
-        }
-        p {
-            margin: 0;
-            color: var(--muted);
-            font-size: clamp(1rem, 2vw, 1.2rem);
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fc">
+  <title>小雨助手 · 下载中心</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: #182239;
+      background: #f6f8fc;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --blue: #3867f5;
+      --muted: #71809b;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    a { color: inherit; }
+    .page { width: min(100% - 40px, 1000px); margin: 0 auto; }
+    header { height: 76px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 750; letter-spacing: -.3px; }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px;
+      color: #fff; background: linear-gradient(145deg, #5482ff, #3455db); font-size: 20px;
+      box-shadow: 0 6px 14px #3867f533;
+    }
+    .github-link { color: var(--muted); text-decoration: none; font-size: 14px; }
+    .github-link:hover, .release-link:hover { color: var(--blue); }
+    .hero {
+      position: relative; overflow: hidden; margin: 35px 0 24px; padding: 58px 58px 54px;
+      border: 1px solid #e8edfa; border-radius: 28px;
+      background: radial-gradient(ellipse at 85% 20%, #dfe8ff 0, transparent 40%), linear-gradient(135deg, #fff, #f6f8ff);
+    }
+    .hero::after {
+      content: "↓"; position: absolute; right: 9%; top: 4px; color: #3867f511;
+      font-size: 220px; line-height: 1; font-weight: 800; pointer-events: none;
+    }
+    .eyebrow { color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 1.3px; }
+    h1 { position: relative; z-index: 1; margin: 14px 0 12px; font-size: clamp(34px, 5vw, 48px); letter-spacing: -1.8px; }
+    .hero-copy { position: relative; z-index: 1; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .hero-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 17px; margin-top: 28px; }
+    .primary-button {
+      min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 0 23px; border: 0; border-radius: 13px; color: #fff; background: var(--blue);
+      box-shadow: 0 8px 20px #3867f533; font: inherit; font-weight: 700; text-decoration: none;
+      transition: transform .15s, background .15s;
+    }
+    .primary-button:hover { transform: translateY(-2px); background: #2854e0; }
+    .primary-button:focus-visible, a:focus-visible { outline: 3px solid #8ba6ff; outline-offset: 3px; }
+    .release-meta { color: var(--muted); font-size: 13px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; margin: 36px 2px 15px; }
+    h2 { margin: 0; font-size: 20px; letter-spacing: -.4px; }
+    .section-heading p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { min-height: 225px; padding: 23px; border: 1px solid #e8edf5; border-radius: 19px; background: #fff; }
+    .card-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: #f1f4fb; font-size: 22px; }
+    .card h3 { margin: 16px 0 6px; font-size: 17px; }
+    .card p { min-height: 40px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .asset-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .asset-link, .release-link {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 11px;
+      border: 1px solid #e5eaf4; border-radius: 9px; color: #33415d; background: #fff;
+      font-size: 12px; font-weight: 650; text-decoration: none;
+    }
+    .asset-link:hover { border-color: #b8c8ff; color: var(--blue); background: #f8faff; }
+    .release-link { margin-top: 17px; color: var(--blue); }
+    .ios-note { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .status { min-height: 18px; margin-top: 14px; color: var(--muted); font-size: 12px; }
+    .status.error { color: #b54747; }
+    footer { display: flex; justify-content: space-between; gap: 14px; margin: 32px 0 25px; padding-top: 18px; border-top: 1px solid #e7ebf3; color: var(--muted); font-size: 12px; }
+    footer a { text-decoration: none; }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 28px, 520px); }
+      header { height: 64px; }
+      .hero { margin-top: 20px; padding: 39px 25px; border-radius: 22px; }
+      .hero::after { right: -5%; top: 20px; font-size: 150px; }
+      .hero-copy { max-width: 330px; font-size: 14px; }
+      .section-heading { align-items: start; flex-direction: column; gap: 8px; }
+      .cards { grid-template-columns: 1fr; gap: 12px; }
+      .card { min-height: auto; padding: 20px; }
+      .card p { min-height: 0; }
+      footer { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <h1>xiyuzs</h1>
-        <p>GitHub Pages 已就绪</p>
-    </div>
+  <div class="page">
+    <header>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">雨</span><span>小雨助手</span></div>
+      <a class="github-link" href="https://github.com/liang1668/xiyuzs" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow">DOWNLOAD CENTER</div>
+        <h1 id="page-title">下载小雨助手</h1>
+        <p class="hero-copy">选择适合你设备的版本，安装包由小雨助手下载服务器提供。</p>
+        <div class="hero-actions">
+          <a class="primary-button" id="download-now" href="http://139.196.4.34:8080/downloads/xyzs.exe">
+            <span aria-hidden="true">↓</span><span id="download-label">立即下载</span>
+          </a>
+          <span class="release-meta">支持 Android 与 Windows</span>
+        </div>
+      </section>
+
+      <div class="section-heading">
+        <div><h2>选择你的设备</h2><p>点击按钮后将从下载服务器获取安装包</p></div>
+        <a class="github-link" href="https://github.com/liang1668/xiyuzs" target="_blank" rel="noopener noreferrer">查看 GitHub 项目 →</a>
+      </div>
+
+      <section class="cards" aria-label="平台下载">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">📱</div>
+          <h3>Android 安卓版</h3>
+          <p>下载 APK 安装包，在手机上安装使用。</p>
+          <div class="asset-links"><a class="asset-link" href="http://139.196.4.34:8080/downloads/xiaoyu.apk" download>下载 APK ↓</a></div>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">💻</div>
+          <h3>Windows 电脑版</h3>
+          <p>下载 EXE 安装程序，在电脑上安装使用。</p>
+          <div class="asset-links"><a class="asset-link" href="http://139.196.4.34:8080/downloads/xyzs.exe" download>下载 EXE ↓</a></div>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🍎</div>
+          <h3>iPhone / iPad</h3>
+          <p>iOS 不提供 APK，请直接使用网页版。</p>
+          <a class="release-link" href="http://139.196.4.34:8080/" target="_blank" rel="noopener noreferrer">打开网页版 ↗</a>
+          <div class="ios-note">添加到主屏幕：在 Safari 打开网页 → 点“分享” → 选择“添加到主屏幕”。</div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>安装包由下载服务器提供；如遇下载问题，请稍后重试。</span>
+      <a href="https://github.com/liang1668/xiyuzs" target="_blank" rel="noopener noreferrer">GitHub 项目 ↗</a>
+    </footer>
+  </div>
+
+  <script>
+    const androidDownloadUrl = "http://139.196.4.34:8080/downloads/xiaoyu.apk";
+    const windowsDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.exe";
+    const webAppUrl = "http://139.196.4.34:8080/";
+
+    function setDownloadButton() {
+      const button = document.getElementById("download-now");
+      const label = document.getElementById("download-label");
+      const userAgent = navigator.userAgent;
+      const isIPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+
+      if (/iPhone|iPad|iPod/i.test(userAgent) || isIPadOS) {
+        button.href = webAppUrl;
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+        label.textContent = "打开网页版";
+      } else if (/Android/i.test(userAgent)) {
+        button.href = androidDownloadUrl;
+      } else {
+        button.href = windowsDownloadUrl;
+      }
+    }
+
+    setDownloadButton();
+  </script>
 </body>
 </html>
