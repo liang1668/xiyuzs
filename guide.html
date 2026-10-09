@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fc">
+  <title>软件使用说明 · 小雨助手</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: #182239;
+      background: #f6f8fc;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --blue: #3867f5;
+      --muted: #71809b;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    a { color: inherit; }
+    .page { width: min(100% - 40px, 1000px); margin: 0 auto; }
+    header { height: 76px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 750; letter-spacing: -.3px; }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px;
+      color: #fff; background: linear-gradient(145deg, #5482ff, #3455db); font-size: 20px;
+      box-shadow: 0 6px 14px #3867f533;
+    }
+    .back-link { color: var(--blue); font-size: 14px; font-weight: 700; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+    .intro {
+      margin: 28px 0 20px; padding: 36px 40px; border: 1px solid #e8edfa; border-radius: 24px;
+      background: radial-gradient(ellipse at 85% 20%, #dfe8ff 0, transparent 40%), linear-gradient(135deg, #fff, #f6f8ff);
+    }
+    .eyebrow { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: 1.3px; }
+    h1 { margin: 10px 0 8px; font-size: clamp(28px, 5vw, 38px); letter-spacing: -1px; }
+    .intro p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .step { min-width: 0; overflow: hidden; border: 1px solid #e8edf5; border-radius: 18px; background: #fff; }
+    .step-image-link { display: grid; height: 440px; place-items: center; overflow: hidden; background: #eef2f9; }
+    .step img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform .2s; }
+    .step-image-link:hover img { transform: scale(1.02); }
+    .step-copy { padding: 18px 20px 20px; }
+    .step-number { display: inline-block; margin-bottom: 8px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .6px; }
+    .step h2 { margin: 0 0 7px; font-size: 17px; }
+    .step p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    footer { margin: 28px 0 24px; padding-top: 18px; border-top: 1px solid #e7ebf3; color: var(--muted); font-size: 12px; }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 28px, 520px); }
+      header { height: 64px; }
+      .intro { margin-top: 20px; padding: 28px 23px; border-radius: 20px; }
+      .steps { grid-template-columns: 1fr; gap: 12px; }
+      .step-image-link { height: min(120vw, 560px); }
+      .step-copy { padding: 16px 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">雨</span><span>小雨助手</span></div>
+      <a class="back-link" href="./index.html">← 返回下载页</a>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow">USER GUIDE</div>
+        <h1 id="page-title">软件使用说明</h1>
+        <p>按下面的步骤图片了解小雨助手常用页面与功能。点击图片可查看大图。</p>
+      </section>
+
+      <section class="steps" aria-label="使用步骤">
+        <article class="step">
+          <a class="step-image-link" href="./guide/01-home.png" target="_blank" rel="noopener noreferrer">
+            <img src="./guide/01-home.png" alt="小雨助手主界面，展示号码和玩法选择区域">
+          </a>
+          <div class="step-copy">
+            <span class="step-number">STEP 01</span>
+            <h2>主界面与玩法选择</h2>
+            <p>在主界面选择号码或对应玩法，查看下方生成的内容。</p>
+          </div>
+        </article>
+        <article class="step">
+          <a class="step-image-link" href="./guide/02-expert-recommendations.png" target="_blank" rel="noopener noreferrer">
+            <img src="./guide/02-expert-recommendations.png" alt="小雨助手专家推荐页面">
+          </a>
+          <div class="step-copy">
+            <span class="step-number">STEP 02</span>
+            <h2>查看专家推荐</h2>
+            <p>打开专家推荐页面，点击推荐项目查看内容。</p>
+          </div>
+        </article>
+        <article class="step">
+          <a class="step-image-link" href="./guide/03-count-statistics.png" target="_blank" rel="noopener noreferrer">
+            <img src="./guide/03-count-statistics.png" alt="小雨助手按次数统计的号码结果">
+          </a>
+          <div class="step-copy">
+            <span class="step-number">STEP 03</span>
+            <h2>查看次数统计</h2>
+            <p>统计号码出现次数，并可删除不需要保留的次数号码。</p>
+          </div>
+        </article>
+        <article class="step">
+          <a class="step-image-link" href="./guide/04-amount-statistics.png" target="_blank" rel="noopener noreferrer">
+            <img src="./guide/04-amount-statistics.png" alt="小雨助手按金额统计的号码结果">
+          </a>
+          <div class="step-copy">
+            <span class="step-number">STEP 04</span>
+            <h2>切换金额统计</h2>
+            <p>点击“金额/次数”按钮，在金额与次数统计结果之间切换。</p>
+          </div>
+        </article>
+        <article class="step">
+          <a class="step-image-link" href="./guide/05-draw-history.png" target="_blank" rel="noopener noreferrer">
+            <img src="./guide/05-draw-history.png" alt="小雨助手往期开奖记录页面">
+          </a>
+          <div class="step-copy">
+            <span class="step-number">STEP 05</span>
+            <h2>查询开奖记录</h2>
+            <p>在开奖记录页面输入期号搜索，也可以使用日历选择日期。</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>小雨助手 · 软件使用说明</footer>
+  </div>
+</body>
+</html>
