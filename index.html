@@ -43,6 +43,8 @@
     .eyebrow { color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 1.3px; }
     h1 { position: relative; z-index: 1; margin: 14px 0 12px; font-size: clamp(34px, 5vw, 48px); letter-spacing: -1.8px; }
     .hero-copy { position: relative; z-index: 1; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .contact-link { color: var(--blue); font-weight: 700; text-decoration: none; }
+    .contact-link:hover { color: #234bd0; text-decoration: underline; }
     .hero-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 17px; margin-top: 28px; }
     .primary-button {
       min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
@@ -101,6 +103,7 @@
       <section class="hero" aria-labelledby="page-title">
         <div class="eyebrow">DOWNLOAD CENTER</div>
         <h1 id="page-title">下载小雨助手</h1>
+        <p class="hero-copy"><a class="contact-link" href="https://qm.qq.com/q/oGyHdfHVL2" target="_blank" rel="noopener noreferrer">点击加入 QQ 群：496663908 ↗</a></p>
         <p class="hero-copy">选择适合你设备的版本，获取小雨助手官方安装包。</p>
         <div class="hero-actions">
           <a class="primary-button is-disabled" id="download-now" aria-disabled="true">
