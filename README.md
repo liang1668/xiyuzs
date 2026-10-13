@@ -19,4 +19,4 @@
 
 APK 资产会显示在 Android 区域；EXE 和 ZIP 会显示在 Windows 区域。下载按钮直接链接到 Release 资产文件，不会先打开 Releases 页面。醒目的“立即下载”按钮会根据访问设备选择 APK、EXE，或在 iPhone/iPad 上打开网页版。若对应平台的安装包尚未上传，页面会提示，而不会跳转到 Releases 页面。
 
-请将仓库设为 **Public（公开）**，这样访客无需登录即可下载 Release 资产。iPhone 网页版链接仍为 `http://139.196.4.34:8080/`。请勿将访问令牌或其他密钥放进网页代码。
+请将仓库设为 **Public（公开）**，这样访客无需登录即可下载 Release 资产。iPhone 网页版链接仍为 `
