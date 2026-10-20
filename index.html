@@ -77,6 +77,13 @@
     .primary-button.is-disabled:hover { transform: none; background: var(--blue); }
     .release-link { margin-top: 17px; color: var(--blue); }
     .ios-note { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .ios-install { margin-top: 32px; padding: 24px; border: 1px solid #e8edf5; border-radius: 19px; background: #fff; }
+    .ios-install h2 { margin-bottom: 16px; }
+    .ios-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .ios-steps li { display: flex; gap: 12px; min-width: 0; padding: 14px; border-radius: 13px; background: #f6f8fc; }
+    .ios-step-number { flex: 0 0 28px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--blue); font-size: 13px; font-weight: 700; }
+    .ios-step-copy { color: #33415d; font-size: 13px; line-height: 1.7; }
+    .ios-step-copy strong { color: #182239; }
     .status { min-height: 18px; margin-top: 14px; color: var(--muted); font-size: 12px; }
     .status.error { color: #b54747; }
     footer { display: flex; justify-content: space-between; gap: 14px; margin: 32px 0 25px; padding-top: 18px; border-top: 1px solid #e7ebf3; color: var(--muted); font-size: 12px; }
@@ -91,6 +98,8 @@
       .cards { grid-template-columns: 1fr; gap: 12px; }
       .card { min-height: auto; padding: 20px; }
       .card p { min-height: 0; }
+      .ios-install { margin-top: 24px; padding: 20px; }
+      .ios-steps { grid-template-columns: 1fr; gap: 9px; }
       footer { flex-direction: column; }
     }
   </style>
@@ -136,13 +145,23 @@
         </article>
 
         <article class="card">
-          <div class="card-icon" aria-hidden="true">🍎</div>
+          <img class="card-icon" src="./iphone-icon.png" alt="小雨助手图标">
           <h3>iPhone / iPad</h3>
-          <p>下载并安装配置描述文件，即可从主屏幕快速打开网页版。</p>
-          <a class="release-link" href="./xiaoyu-ios.mobileconfig">下载 iPhone 配置文件 ↓</a>
-          <p class="ios-note">此配置仅添加网页快捷图标，不是 App。也可以<a class="contact-link" href="http://139.196.4.34/lottery/index.html" target="_blank" rel="noopener noreferrer">直接打开网页版</a>。</p>
-          <div class="ios-note">添加到主屏幕：在 Safari 打开网页 → 点“共享” → 选择“添加到主屏幕”。</div>
+          <p>在 iPhone 或 iPad 上下载并安装配置描述文件，即可从主屏幕打开小雨助手。</p>
+          <a class="release-link" href="./xiaoyu-ios.mobileconfig">下载配置文件 ↓</a>
+          <p class="ios-note">配置文件只会添加网页快捷图标，不是 iOS App。</p>
         </article>
+      </section>
+
+      <section class="ios-install" aria-labelledby="ios-install-title">
+        <h2 id="ios-install-title">iPhone 安装步骤</h2>
+        <ol class="ios-steps">
+          <li><span class="ios-step-number">1</span><span class="ios-step-copy">用 <strong>iPhone 的 Safari</strong> 打开本页<br>（不要用微信内置浏览器）</span></li>
+          <li><span class="ios-step-number">2</span><span class="ios-step-copy">点击上方「下载配置文件」按钮<br>Safari 会弹出「此网站正尝试下载配置描述文件」</span></li>
+          <li><span class="ios-step-number">3</span><span class="ios-step-copy">打开 <strong>设置 → 通用 → VPN 与设备管理</strong><br>（或「已下载描述文件」）</span></li>
+          <li><span class="ios-step-number">4</span><span class="ios-step-copy">找到「小雨助手」并点击「安装」<br>可能需要输入锁屏密码</span></li>
+          <li><span class="ios-step-number">5</span><span class="ios-step-copy">回到桌面，即可看到「小雨助手」图标<br>点击即可打开网页</span></li>
+        </ol>
       </section>
     </main>
 
@@ -154,7 +173,6 @@
   <script>
     const androidDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.apk";
     const windowsDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.exe";
-    const webAppUrl = "http://139.196.4.34/lottery/index.html";
     const iosProfileUrl = "./xiaoyu-ios.mobileconfig";
     function setPrimaryDownload() {
       const button = document.getElementById("download-now");
@@ -166,7 +184,7 @@
         button.href = iosProfileUrl;
         button.removeAttribute("target");
         button.removeAttribute("rel");
-        label.textContent = "下载 iPhone 配置文件";
+        label.textContent = "下载配置文件";
       } else if (/Android/i.test(userAgent)) {
         button.href = androidDownloadUrl;
         label.textContent = "立即下载";

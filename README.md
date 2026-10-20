@@ -1,6 +1,6 @@
 # 小雨助手下载页
 
-这是一个纯静态下载页，不需要框架或编译步骤。网页可部署到 Cloudflare Pages（也可使用 GitHub Pages）；Android 和 Windows 安装包使用国内直连地址，iPhone 可下载配置描述文件添加网页版桌面图标，也可直接使用网页版。
+这是一个纯静态下载页，不需要框架或编译步骤。网页可部署到 Cloudflare Pages（也可使用 GitHub Pages）；Android 和 Windows 安装包使用国内直连地址，iPhone 通过下载配置描述文件添加网页版桌面图标。
 
 ## 部署到 Cloudflare Pages
 
@@ -15,7 +15,6 @@
 
 - Android APK：`http://139.196.4.34:8080/downloads/xyzs.apk`
 - Windows EXE：`http://139.196.4.34:8080/downloads/xyzs.exe`
-- iPhone/iPad 网页版：`http://139.196.4.34/lottery/index.html`
-- iPhone/iPad 桌面图标配置：`xiaoyu-ios.mobileconfig`（下载后在 iPhone/iPad 的“设置”中安装描述文件）
+- iPhone/iPad 桌面图标配置：`xiaoyu-ios.mobileconfig`（需用 Safari 下载，然后在 iPhone/iPad 的“设置”中安装描述文件）
 
-配置描述文件只会添加指向网页版的桌面快捷图标，不是 iOS App。页面会自动识别 Android、iPhone/iPad 和其他设备，为“立即下载”按钮选择对应地址；平台卡片也提供直接链接。更换安装包时请同步更新 `index.html` 中的平台下载链接。请勿将访问令牌或其他密钥放进网页代码。
+配置描述文件只会添加指向 `http://139.196.4.34/lottery/index.html` 的桌面快捷图标，不是 iOS App。页面会自动识别 Android、iPhone/iPad 和其他设备，为“立即下载”按钮选择对应地址；平台卡片也提供直接链接。iPhone 用户请按页面中的“iPhone 安装步骤”操作。更换安装包时请同步更新 `index.html` 中的平台下载链接。请勿将访问令牌或其他密钥放进网页代码。
