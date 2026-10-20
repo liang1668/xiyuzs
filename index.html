@@ -138,8 +138,9 @@
         <article class="card">
           <div class="card-icon" aria-hidden="true">🍎</div>
           <h3>iPhone / iPad</h3>
-          <p>iOS 不提供 APK，请直接使用网页版。</p>
-          <a class="release-link" href="http://139.196.4.34/lottery/index.html" target="_blank" rel="noopener noreferrer">打开网页版 ↗</a>
+          <p>下载并安装配置描述文件，即可从主屏幕快速打开网页版。</p>
+          <a class="release-link" href="./xiaoyu-ios.mobileconfig">下载 iPhone 配置文件 ↓</a>
+          <p class="ios-note">此配置仅添加网页快捷图标，不是 App。也可以<a class="contact-link" href="http://139.196.4.34/lottery/index.html" target="_blank" rel="noopener noreferrer">直接打开网页版</a>。</p>
           <div class="ios-note">添加到主屏幕：在 Safari 打开网页 → 点“共享” → 选择“添加到主屏幕”。</div>
         </article>
       </section>
@@ -154,6 +155,7 @@
     const androidDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.apk";
     const windowsDownloadUrl = "http://139.196.4.34:8080/downloads/xyzs.exe";
     const webAppUrl = "http://139.196.4.34/lottery/index.html";
+    const iosProfileUrl = "./xiaoyu-ios.mobileconfig";
     function setPrimaryDownload() {
       const button = document.getElementById("download-now");
       const label = document.getElementById("download-label");
@@ -161,10 +163,10 @@
       const isIPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
 
       if (/iPhone|iPad|iPod/i.test(userAgent) || isIPadOS) {
-        button.href = webAppUrl;
-        button.target = "_blank";
-        button.rel = "noopener noreferrer";
-        label.textContent = "打开网页版";
+        button.href = iosProfileUrl;
+        button.removeAttribute("target");
+        button.removeAttribute("rel");
+        label.textContent = "下载 iPhone 配置文件";
       } else if (/Android/i.test(userAgent)) {
         button.href = androidDownloadUrl;
         label.textContent = "立即下载";
@@ -172,6 +174,9 @@
         button.href = windowsDownloadUrl;
         label.textContent = "立即下载";
       }
+
+      button.classList.remove("is-disabled");
+      button.removeAttribute("aria-disabled");
     }
 
     setPrimaryDownload();
